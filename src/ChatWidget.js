@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { BedrockClient } from "@aws-sdk/client-bedrock";
 
 export const sidebar = {
@@ -139,8 +139,17 @@ const ChatWidget = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [showImage, setShowImage] = useState(true); // Track whether to show the image
+  const messagesEndRef = useRef(null); // Reference to the last message
 
   const toggleChat = () => setIsOpen(!isOpen);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom(); // Scroll to the bottom whenever messages are updated
+  }, [messages]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -228,25 +237,26 @@ const ChatWidget = () => {
               </p>
             </>
           )}
-        <div style={styles.messages}>
-        {messages.map((msg, i) => (
-            <div
-            key={i}
-            style={msg.sender === "user" ? styles.userContainer : styles.botContainer}
-            >
+          <div style={styles.messages}>
+            {messages.map((msg, i) => (
+              <div
+                key={i}
+                style={msg.sender === "user" ? styles.userContainer : styles.botContainer}
+              >
                 <div style={msg.sender === "user" ? styles.user : styles.bot}>
-                    {msg.sender === "bot" && (
+                  {msg.sender === "bot" && (
                     <img
-                        src="/images/AmyAvatar.jpg"
-                        alt="Bot Avatar"
-                        style={styles.avatar}
+                      src="/images/AmyAvatar.jpg"
+                      alt="Bot Avatar"
+                      style={styles.avatar}
                     />
-                    )}
-                    {msg.text}
+                  )}
+                  {msg.text}
                 </div>
-            </div>
-        ))}
-        </div>
+              </div>
+            ))}
+            <div ref={messagesEndRef} /> {/* Reference to the last message */}
+          </div>
           <div style={styles.inputArea}>
             <textarea
               style={styles.input}

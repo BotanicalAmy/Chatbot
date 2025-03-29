@@ -121,6 +121,8 @@ const styles = {
     borderRadius: "5px",
     resize: "none",
     minHeight: "40px",
+    textAlign: "left", // Align text to the left
+    verticalAlign: "top", // Align text to the top
   },
   button: {
     marginLeft: "10px",

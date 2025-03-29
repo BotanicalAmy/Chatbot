@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  font-family: 'Saira', 'Arial', 'Helvetica','sans-serif';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family:  'Saira', 'Arial', 'Helvetica','sans-serif';
+}
+
+@media (max-width: 768px) {
+  .chatBox {
+    width: 90%; /* Set the width to 90% for mobile screens */
+    right: 5%; /* Center the chat box horizontally */
+    bottom: 20px; /* Adjust bottom spacing */
+  }
+}
+
